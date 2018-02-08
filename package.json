@@ -2,10 +2,10 @@
   "name": "txtsmrt-api",
   "version": "1.0.0",
   "description": "smart texting app",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "npm test",
-    "start": "nodemon server.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -30,5 +30,11 @@
     "eslint-plugin-standard": "^3.0.1",
     "nodemon": "^1.14.12"
   },
-  "dependencies": {}
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "http": "0.0.0",
+    "log4js": "^2.5.2"
+  }
 }
