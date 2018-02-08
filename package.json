@@ -1,0 +1,34 @@
+{
+  "name": "txtsmrt-api",
+  "version": "1.0.0",
+  "description": "smart texting app",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jsullivan5/txtsmrt-api.git"
+  },
+  "keywords": [
+    "messaging",
+    "texting"
+  ],
+  "author": "James Sullivan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jsullivan5/txtsmrt-api/issues"
+  },
+  "homepage": "https://github.com/jsullivan5/txtsmrt-api#readme",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "nodemon": "^1.14.12"
+  },
+  "dependencies": {}
+}
