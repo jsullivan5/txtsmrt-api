@@ -4,7 +4,7 @@
   "description": "smart texting app",
   "main": "app.js",
   "scripts": {
-    "test": "npm test",
+    "test": "./node_modules/mocha/bin/_mocha",
     "start": "nodemon app.js"
   },
   "repository": {
@@ -22,13 +22,16 @@
   },
   "homepage": "https://github.com/jsullivan5/txtsmrt-api#readme",
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.17.0",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^6.0.0",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "nodemon": "^1.14.12"
+    "mocha": "^5.0.0",
+    "nodemon": "^1.14.12",
+    "sinon": "^4.3.0"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
