@@ -1,15 +1,16 @@
-const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 const config = require('../util/config');
 const logger = require('../util/logger');
+const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+const toneAnalyzer = new ToneAnalyzerV3({
+  username: config.watsonUserName,
+  password: config.watsonPassword,
+  version_date: '2016-05-19',
+  url: config.watsonUrl
+});
 
 class ToneService {
   constructor () {
-    this.toneAnalyzer = new ToneAnalyzerV3({
-      username: config.watsonUserName,
-      password: config.watsonPassword,
-      version: '2016-05-19',
-      url: config.watsonUrl
-    });
+    this.toneAnalyzer = toneAnalyzer;
   }
 
   async getTone (message) {
@@ -18,13 +19,17 @@ class ToneService {
       content_type: 'text/plain'
     };
 
-    return this.toneAnalyzer.tone(params, (error, response) => {
-      if (error) {
-        logger.error('error:', error);
-      } else {
-        logger.dubug(JSON.stringify(response, null, 2));
-        return response;
-      }
+    return new Promise((resolve, reject) => {
+      this.toneAnalyzer.tone(params, (error, response) => {
+        if (error) {
+          logger.error('error:', error);
+          reject(error);
+        } else {
+          const parsedResponse = JSON.stringify(response, null, 2);
+          logger.debug(parsedResponse);
+          resolve(parsedResponse);
+        }
+      });
     });
   }
 }
