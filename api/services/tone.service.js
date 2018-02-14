@@ -12,7 +12,7 @@ class ToneService {
     });
   }
 
-  getTone (message) {
+  async getTone (message) {
     const params = {
       tone_input: message,
       content_type: 'text/plain'
