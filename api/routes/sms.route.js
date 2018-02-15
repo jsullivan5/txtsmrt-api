@@ -1,15 +1,19 @@
 const express = require('express');
 const twilioService = require('../services/twilio.service');
 const smsService = require('../services/sms.service');
+const toneService = require('../services/tone.service');
 const logger = require('../util/logger');
 
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
-  let message;
+  let toneMessage;
 
   try {
-    message = await twilioService.formatMessage(req.body.Body);
+    const tones = await toneService.getTone(req.body.Body);
+    toneMessage = await twilioService.formatMessage(
+      tones.document_tone.tone_categories[0].tones
+    );
     await smsService.insertMessage(req.body);
     logger.debug(`Message inserted: [${req.body.Body}]`);
   } catch (error) {
@@ -17,7 +21,7 @@ router.post('/', async (req, res, next) => {
   }
 
   res.writeHead(200, { 'Content-Type': 'text/xml' });
-  res.end(message);
+  res.end(toneMessage);
 });
 
 module.exports = router;
