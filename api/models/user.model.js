@@ -28,16 +28,32 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  },
-  passwordConf: {
-    type: String,
-    required: true
   }
 });
 
-UserSchema.pre('save', (next) => {
+UserSchema.statics.authenticate = function (phoneNumber, password, callback) {
+  User.findOne({ phoneNumber: phoneNumber })
+    .exec(function (error, user) {
+      if (error) {
+        return callback(error);
+      } else if (!user) {
+        const error = new Error('User nor found.');
+        error.status = 401;
+        return callback(error);
+      }
+      bcrypt.compare(password, user.password, function (error, result) {
+        if (result === true) {
+          return callback(null, user);
+        } else {
+          return callback(error);
+        }
+      });
+    });
+};
+
+UserSchema.pre('save', function (next) {
   const user = this;
-  bcrypt.hash(user.password, 10, (error, hash) => {
+  bcrypt.hash(user.password, 10, function (error, hash) {
     if (error) {
       return next(error);
     }
@@ -46,4 +62,5 @@ UserSchema.pre('save', (next) => {
   });
 });
 
-module.exports = mongoose.model('User', UserSchema);
+var User = mongoose.model('User', UserSchema);
+module.exports = User;
