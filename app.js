@@ -17,10 +17,12 @@ const mongoose = require('mongoose');
 mongoose.connect(config.mongoUri);
 mongoose.Promise = global.Promise;
 
-const db = mongoose.connection;
-db.on('error', logger.error
+const MongoStore = require('connect-mongo')(session);
+
+const connection = mongoose.connection;
+connection.on('error', logger.error
   .bind(logger, 'MongoDb connection error:'));
-db.once('open', () => {
+connection.once('open', () => {
   logger.info('Conected to database');
 });
 
@@ -33,7 +35,8 @@ const sess = {
   secret: config.secret,
   resave: true,
   saveUninitialized: true,
-  cookie: {}
+  store: new MongoStore({ mongooseConnection: connection }),
+  cookie: { }
 };
 
 if (app.get('env') === 'production') {
@@ -45,13 +48,12 @@ if (app.get('env') === 'production') {
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// TODO: Add connect-mongo for session store
 app.use(session(sess));
 app.use(cors({
   'methods': 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
   'optionsSuccessStatus': 200,
   'origin': true,
-  preflightContinue: true
+  'preflightContinue': true
 }));
 
 // Routes
