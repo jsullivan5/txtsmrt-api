@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
   phoneNumber: {
@@ -32,6 +33,17 @@ const UserSchema = new Schema({
     type: String,
     required: true
   }
+});
+
+UserSchema.pre('save', (next) => {
+  const user = this;
+  bcrypt.hash(user.password, 10, (error, hash) => {
+    if (error) {
+      return next(error);
+    }
+    user.password = hash;
+    next();
+  });
 });
 
 module.exports = mongoose.model('User', UserSchema);
