@@ -1,4 +1,4 @@
-const Sms = require('../../models/sms.model');
+const Sms = require('../models/sms.model');
 const logger = require('../util/logger');
 
 class SmsService {

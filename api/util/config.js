@@ -6,5 +6,6 @@ module.exports = exports = {
   mongoUri: process.env.MONGO_URI || null,
   watsonUserName: process.env.WATSON_USER_NAME || null,
   watsonPassword: process.env.WATSON_PASSWORD || null,
-  watsonUrl: process.env.WATSON_URL || null
+  watsonUrl: process.env.WATSON_URL || null,
+  secret: process.env.SECRET || null
 };
