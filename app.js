@@ -36,7 +36,11 @@ const sess = {
   resave: true,
   saveUninitialized: true,
   store: new MongoStore({ mongooseConnection: connection }),
-  cookie: { }
+  cookie: {
+    secure: false,
+    maxAge: 5184000000,
+    httpOnly: false
+  }
 };
 
 if (app.get('env') === 'production') {
@@ -53,7 +57,8 @@ app.use(cors({
   'methods': 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
   'optionsSuccessStatus': 200,
   'origin': true,
-  'preflightContinue': true
+  'preflightContinue': true,
+  'credentials': true
 }));
 
 // Routes
