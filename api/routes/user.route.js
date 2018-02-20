@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var ObjectId = require('mongoose').Types.ObjectId;
 const User = require('../models/user.model');
 
 router.post('/signup', async (req, res, next) => {
@@ -27,9 +28,23 @@ router.post('/signup', async (req, res, next) => {
     if (err) {
       return next(err);
     } else {
-      return res.status(200).send('User Created');
+      req.session.userId = user._id;
+      delete user.password;
+      return res.cookie('userId', user._id, { maxAge: 900000, httpOnly: true })
+        .status(200).send(user);
     }
   });
+});
+
+router.get('/login', async (req, res, next) => {
+  const userId = req.session.userId;
+  if (req.session && userId) {
+    const user = await User.findOne({ '_id': new ObjectId(userId) })
+      .select('_id phoneNumber firstName lastName email');
+    res.status(200).send(user);
+  } else {
+    res.end();
+  }
 });
 
 router.post('/login', (req, res, next) => {
@@ -41,7 +56,8 @@ router.post('/login', (req, res, next) => {
       return next(err);
     } else {
       req.session.userId = user._id;
-      return res.send(user);
+      delete user.password;
+      return res.status(200).send(user);
     }
   });
 });
