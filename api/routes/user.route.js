@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var ObjectId = require('mongoose').Types.ObjectId;
+const ObjectId = require('mongoose').Types.ObjectId;
 const User = require('../models/user.model');
 
 router.post('/signup', async (req, res, next) => {
@@ -30,8 +30,7 @@ router.post('/signup', async (req, res, next) => {
     } else {
       req.session.userId = user._id;
       delete user.password;
-      return res.cookie('userId', user._id, { maxAge: 900000, httpOnly: true })
-        .status(200).send(user);
+      return res.status(200).send(user);
     }
   });
 });
