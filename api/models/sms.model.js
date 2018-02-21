@@ -5,7 +5,8 @@ const SmsSchema = new Schema({
   to: String,
   from: String,
   text: String,
-  smsId: String
+  smsId: String,
+  userId: String
 });
 
 module.exports = mongoose.model('Sms', SmsSchema);
