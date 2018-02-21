@@ -12,6 +12,7 @@ const index = require('./api/routes/index');
 const sms = require('./api/routes/sms.route');
 const tone = require('./api/routes/tone.route');
 const user = require('./api/routes/user.route');
+const message = require('./api/routes/message.route');
 
 const mongoose = require('mongoose');
 mongoose.connect(config.mongoUri);
@@ -66,6 +67,7 @@ app.use('/healthcheck', index);
 app.use('/sms', sms);
 app.use('/tone', tone);
 app.use('/user', user);
+app.use('/message', message);
 
 // Error Handler
 app.use((err, req, res, next) => {
