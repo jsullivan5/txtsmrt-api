@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/jsullivan5/txtsmrt-api/tree/master.svg?style=svg)](https://circleci.com/gh/jsullivan5/txtsmrt-api/tree/master)
 
-# txtSmrt API Tutorial (Under Construction)
+# txtSmrt API (Under Construction)
 
 This project, under construction, uses Twilio and Watson to take some of the guesswork out of reading text messages.  Users can text content to a Twilio number and receive setinment analysis from Watson, gaining insights into their texts.  This API also interfaces with a decoupled UI that allows users to see their history and view community submitted content.
 
